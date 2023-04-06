@@ -4,16 +4,18 @@ import { useEffect, useState } from 'react';
 import ShowPlayer from '../../components/ShowPlayer';
 
 const Home = () => {
-  const [selectedPlayerId, setSelectedPlayerId] = useState<number>();
+  const [selectedPlayerIndex, setSelectedPlayerIndex] = useState<number>();
 
   useEffect(() => {
-    const randomId = Math.floor(Math.random() * 373);
-    setSelectedPlayerId(randomId);
+    const randomNum = Math.floor(Math.random() * 373);
+    setSelectedPlayerIndex(randomNum);
   }, []);
 
   return (
     <>
-      <main>{selectedPlayerId && <ShowPlayer id={selectedPlayerId} />}</main>
+      <main>
+        {selectedPlayerIndex && <ShowPlayer index={selectedPlayerIndex} />}
+      </main>
     </>
   );
 };
