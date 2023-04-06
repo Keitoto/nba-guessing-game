@@ -670,8 +670,8 @@
 // Cody Zeller,13,14.1,zelleco01
 // Ivica Zubac,73,28.6,zubaciv01`;
 
-import { ids } from './ids';
-import { names } from './names';
+import { ids } from './constants/ids';
+import { names } from './constants/names';
 
 // const names = dataStr
 //   .split('\n')
