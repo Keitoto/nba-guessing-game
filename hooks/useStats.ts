@@ -6,11 +6,7 @@ const fetcher: Fetcher<SeasonStatsResponse> = async (url: string) => {
   return res.json();
 };
 
-export const useSinglePlayerStats = (
-  id: number,
-  name: string | 'NAME',
-  team: Teams | 'LAC'
-) => {
+export const useSinglePlayerStats = (id: number, name: string, team: Teams) => {
   const {
     data: res,
     error,
@@ -24,10 +20,12 @@ export const useSinglePlayerStats = (
   if (!res) return { data: null, error, isLoading };
   const playerData = res.data[0];
 
+  console.log(playerData);
+
   const playerStats: PlayerStats = {
     name,
     team,
-    MIN: +playerData.min,
+    MIN: parseFloat(playerData.min),
     PTS: +playerData.pts,
     REB: +playerData.reb,
     AST: +playerData.ast,
