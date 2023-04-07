@@ -1,21 +1,24 @@
 // import Head from 'next/head';
 // import { useStats } from '../../hooks/useStats';
-import { useEffect, useState } from 'react';
-import ShowPlayer from '../../components/ShowPlayer';
+import { useEffect, useMemo, useState } from 'react';
+import ShowPlayer from '../../components/Quiz/Quiz';
+import { playersData } from '../../constants/data';
 
 const Home = () => {
-  const [selectedPlayerIndex, setSelectedPlayerIndex] = useState<number>();
 
-  useEffect(() => {
-    const randomNum = Math.floor(Math.random() * 373);
-    setSelectedPlayerIndex(randomNum);
-  }, []);
+  const selectedPlayerIndex = useMemo(
+    () => Math.floor(Math.random() * 375),
+    []
+  );
+
+  const pickedPlayer = useMemo(
+    () => playersData[selectedPlayerIndex],
+    [selectedPlayerIndex]
+  );
 
   return (
     <>
-      <main>
-        {selectedPlayerIndex && <ShowPlayer index={selectedPlayerIndex} />}
-      </main>
+      <main>{pickedPlayer && <ShowPlayer player={pickedPlayer} />}</main>
     </>
   );
 };
