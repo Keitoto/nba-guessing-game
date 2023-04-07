@@ -1,10 +1,5 @@
-import { Teams } from "../types";
+import { PlayerData } from "../types";
 
-interface PlayerData {
-  name:string,
-  id:number,
-  team:Teams
-}
 export const playersData:PlayerData[] = [
   {
     name: 'Precious Achiuwa',
@@ -1865,5 +1860,20 @@ export const playersData:PlayerData[] = [
     name: 'Ivica Zubac',
     id: 493,
     team: 'LAC',
+  },
+  {
+    name: 'Nicolas Claxton',
+    id: 666508,
+    team: 'BKN',
+  },
+  {
+    name: "Nah'Shon Hyland",
+    id: 17896031,
+    team: 'LAC',
+  },
+  {
+    name: "Cameron Reddish",
+    id: 666860,
+    team: 'POR',
   },
 ];

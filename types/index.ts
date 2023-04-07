@@ -33,6 +33,12 @@ export type EAST =
 
 export type Teams = WEST | EAST;
 
+export interface PlayerData {
+  name: string;
+  id: number;
+  team: Teams;
+}
+
 export interface PlayerStats {
   name: string;
   team: Teams;
@@ -61,4 +67,13 @@ export interface SeasonStatsResponse {
     ft_pct: string;
     turnover: string;
   }[];
+}
+
+export interface gameData {
+  player: PlayerData;
+  answer: {
+    name: Pick<PlayerData, 'name'>;
+    id: Pick<PlayerData, 'id'>;
+  }[];
+  score: number;
 }
