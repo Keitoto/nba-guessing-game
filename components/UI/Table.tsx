@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { PlayerStats } from '../../types';
+import { PlayerFullData, PlayerStats } from '../../types';
 import { isEAST } from '../../constants/team';
 
-const Table: FC<{ data: PlayerStats[]; showName: boolean }> = ({
+const Table: FC<{ data: PlayerFullData[]; showName: boolean }> = ({
   data,
   showName,
 }) => {
@@ -31,16 +31,16 @@ const Table: FC<{ data: PlayerStats[]; showName: boolean }> = ({
             {showName && <td>{row.name}</td>}
             <td>{row.team}</td>
             <td>{isEAST(row.team) ? 'EAST' : 'WEST'}</td>
-            <td>{row.MIN.toFixed(1)}</td>
-            <td>{row.PTS.toFixed(1)}</td>
-            <td>{row.REB.toFixed(1)}</td>
-            <td>{row.AST.toFixed(1)}</td>
-            <td>{row.STL.toFixed(1)}</td>
-            <td>{row.BLK.toFixed(1)}</td>
-            <td>{(row.FGP * 100).toFixed(1)}%</td>
-            <td>{(row.TPP * 100).toFixed(1)}%</td>
-            <td>{(row.FTP * 100).toFixed(1)}%</td>
-            <td>{row.TO}</td>
+            <td>{row.stats.MIN.toFixed(1)}</td>
+            <td>{row.stats.PTS.toFixed(1)}</td>
+            <td>{row.stats.REB.toFixed(1)}</td>
+            <td>{row.stats.AST.toFixed(1)}</td>
+            <td>{row.stats.STL.toFixed(1)}</td>
+            <td>{row.stats.BLK.toFixed(1)}</td>
+            <td>{(row.stats.FGP * 100).toFixed(1)}%</td>
+            <td>{(row.stats.TPP * 100).toFixed(1)}%</td>
+            <td>{(row.stats.FTP * 100).toFixed(1)}%</td>
+            <td>{row.stats.TO}</td>
           </tr>
         ))}
       </tbody>

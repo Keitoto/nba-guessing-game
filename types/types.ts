@@ -38,10 +38,14 @@ export interface PlayerData {
   id: number;
   team: Teams;
 }
+export interface PlayerFullData {
+  name: string;
+  id: number;
+  team: Teams;
+  stats: PlayerStats;
+}
 
 export interface PlayerStats {
-  name: string;
-  team: Teams;
   MIN: number;
   PTS: number;
   REB: number;
@@ -56,6 +60,7 @@ export interface PlayerStats {
 
 export interface SeasonStatsResponse {
   data: {
+    player_id: number;
     min: string;
     pts: string;
     reb: string;
@@ -69,11 +74,8 @@ export interface SeasonStatsResponse {
   }[];
 }
 
-export interface gameData {
-  player: PlayerData;
-  answer: {
-    name: Pick<PlayerData, 'name'>;
-    id: Pick<PlayerData, 'id'>;
-  }[];
+export interface GameData {
+  targetPlayer: PlayerData;
+  answers: PlayerData[];
   score: number;
 }
