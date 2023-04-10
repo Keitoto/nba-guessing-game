@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { PlayerFullData, PlayerStats } from '../../types';
+import { PlayerFullData } from '../../types';
 import { isEAST } from '../../constants/team';
 
 const Table: FC<{ data: PlayerFullData[]; showName: boolean }> = ({

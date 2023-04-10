@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { GameData } from '../../types';
 import Question from './Question';
 import UserInput from './UserInput';

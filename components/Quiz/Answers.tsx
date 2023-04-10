@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { PlayerData, PlayerFullData, PlayerStats } from '../../types';
+import { PlayerData } from '../../types';
 import { useStatsList } from '../../hooks/useStats';
 import Table from '../UI/Table';
 
