@@ -2,12 +2,15 @@ import React, { FC } from 'react';
 import { PlayerStats } from '../../types';
 import { isEAST } from '../../constants/team';
 
-const Table: FC<{ data: PlayerStats[] }> = ({ data }) => {
+const Table: FC<{ data: PlayerStats[]; showName: boolean }> = ({
+  data,
+  showName,
+}) => {
   return (
     <table>
       <thead>
         <tr>
-          <th>Name</th>
+          {showName && <th>Name</th>}
           <th>Team</th>
           <th>Conf</th>
           <th>MIN</th>
@@ -25,7 +28,7 @@ const Table: FC<{ data: PlayerStats[] }> = ({ data }) => {
       <tbody>
         {data.map((row) => (
           <tr key={row.name}>
-            <td>{row.name}</td>
+            {showName && <td>{row.name}</td>}
             <td>{row.team}</td>
             <td>{isEAST(row.team) ? 'EAST' : 'WEST'}</td>
             <td>{row.MIN.toFixed(1)}</td>
