@@ -1,9 +1,15 @@
 import React, { FC, useState } from 'react';
 import { PlayerData } from '../../types';
 
-const UserInput: FC<{ data: PlayerData[] }> = ({ data }) => {
+interface Props {
+  data: PlayerData[];
+  onSubmitAnswer: (id: number) => void;
+}
+
+const UserInput: FC<Props> = ({ data, onSubmitAnswer }) => {
   const [searchTerm, setSearchTerm] = useState('');
   let counter = 0;
+  
   const filteredNames = searchTerm
     ? data.filter((item) => {
         if (counter >= 20) return false;
@@ -30,8 +36,9 @@ const UserInput: FC<{ data: PlayerData[] }> = ({ data }) => {
     event
   ) => {
     const target = event.target as HTMLLIElement;
-    const targetId = target.id;
-    console.log(targetId);
+    const targetId = +target.id;
+    onSubmitAnswer(targetId);
+    setSearchTerm('')
   };
 
   return (
