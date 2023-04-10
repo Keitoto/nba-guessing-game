@@ -16,31 +16,40 @@ const Quiz = () => {
     return pickedPlayer;
   };
 
-  const [gameState, setGameState] = useState<GameData>(() => {
-    return {
-      targetPlayer: pickPlayer(),
-      answers: [],
-      score: MAX_LIFE,
-    };
-  });
-
   const initializeGame = () => {
     setGameState({
       targetPlayer: pickPlayer(),
       answers: [],
       score: MAX_LIFE,
+      isPlaying: true,
     });
   };
 
+  const [gameState, setGameState] = useState<GameData>(() => {
+    return {
+      targetPlayer: pickPlayer(),
+      answers: [],
+      score: MAX_LIFE,
+      isPlaying: true,
+    };
+  });
+
   const handleSubmitAnswer = (id: number) => {
-    const submittedPlayer = playerData.find((item) => item.id === id);
-    if (submittedPlayer)
+    if (id === gameState.targetPlayer.id) {
+      alert('correct');
+    } else {
+      const submittedPlayer = playerData.find((item) => item.id === id);
+
+      if (!submittedPlayer) return;
+
       setGameState((prev) => ({
         ...prev,
         answers: [...prev.answers, submittedPlayer],
+        score: prev.score--,
+        isPlaying: prev.score === 1,
       }));
+    }
   };
-  // const { targetPlayer } = gameState;
 
   const {
     data: targetData,
@@ -51,12 +60,16 @@ const Quiz = () => {
   if (error) return <div>failed to load</div>;
   if (isLoading || !targetData) return <div>loading...</div>;
 
+  const targetFullData = targetData[0];
+
   return (
     <div>
       <UserInput data={playerData} onSubmitAnswer={handleSubmitAnswer} />
-      <p>You have {MAX_LIFE} more answers left</p>
-      <Question player={targetData[0]} />
-      {gameState.answers.length > 0 && <Answers answers={gameState.answers} />}
+      <p>You have {gameState.score} more answers left</p>
+      <Question player={targetFullData} />
+      {gameState.answers.length > 0 && (
+        <Answers answers={gameState.answers} target={targetFullData} />
+      )}
     </div>
   );
 };

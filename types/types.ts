@@ -78,4 +78,5 @@ export interface GameData {
   targetPlayer: PlayerData;
   answers: PlayerData[];
   score: number;
+  isPlaying: boolean;
 }
