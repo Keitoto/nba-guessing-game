@@ -1,41 +1,62 @@
-import React, { FC, useMemo, useState } from 'react';
-import { useSinglePlayerStats } from '../../hooks/useStats';
-import { PlayerData } from '../../types';
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import { GameData } from '../../types';
 import Question from './Question';
 import UserInput from './UserInput';
 import Answers from './Answers';
 import { playersData } from '../../constants/data';
+import { useStatsList } from '../../hooks/useStats';
 
 const Quiz = () => {
-  const [gameData, setGameData] = useState();
+  const MAX_LIFE = 7;
   const playerData = useMemo(() => playersData, []);
 
-  // Get question Player
-  const selectedPlayerIndex = useMemo(
-    () => Math.floor(Math.random() * playerData.length),
-    []
-  );
+  const pickPlayer = () => {
+    const selectedPlayerIndex = Math.floor(Math.random() * playerData.length);
+    const pickedPlayer = playerData[selectedPlayerIndex];
+    return pickedPlayer;
+  };
 
-  const pickedPlayer = useMemo(
-    () => playerData[selectedPlayerIndex],
-    [selectedPlayerIndex]
-  );
+  const [gameState, setGameState] = useState<GameData>(() => {
+    return {
+      targetPlayer: pickPlayer(),
+      answers: [],
+      score: MAX_LIFE,
+    };
+  });
 
-  const { data, error, isLoading } = useSinglePlayerStats(
-    pickedPlayer.id,
-    pickedPlayer.name,
-    pickedPlayer.team
-  );
+  const initializeGame = () => {
+    setGameState({
+      targetPlayer: pickPlayer(),
+      answers: [],
+      score: MAX_LIFE,
+    });
+  };
+
+  const handleSubmitAnswer = (id: number) => {
+    const submittedPlayer = playerData.find((item) => item.id === id);
+    if (submittedPlayer)
+      setGameState((prev) => ({
+        ...prev,
+        answers: [...prev.answers, submittedPlayer],
+      }));
+  };
+  // const { targetPlayer } = gameState;
+
+  const {
+    data: targetData,
+    error,
+    isLoading,
+  } = useStatsList([gameState.targetPlayer]);
 
   if (error) return <div>failed to load</div>;
-  if (isLoading || !data) return <div>loading...</div>;
+  if (isLoading || !targetData) return <div>loading...</div>;
 
   return (
     <div>
-      <UserInput data={playerData} />
-      <p>You have 3 more answers left</p>
-      <Question player={data} />
-      <Answers />
+      <UserInput data={playerData} onSubmitAnswer={handleSubmitAnswer} />
+      <p>You have {MAX_LIFE} more answers left</p>
+      <Question player={targetData[0]} />
+      {gameState.answers.length > 0 && <Answers answers={gameState.answers} />}
     </div>
   );
 };
