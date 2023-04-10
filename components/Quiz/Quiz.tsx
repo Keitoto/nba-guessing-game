@@ -12,7 +12,7 @@ const Quiz = () => {
 
   // Get question Player
   const selectedPlayerIndex = useMemo(
-    () => Math.floor(Math.random() * 375),
+    () => Math.floor(Math.random() * playerData.length),
     []
   );
 
